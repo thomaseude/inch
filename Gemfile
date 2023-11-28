@@ -7,7 +7,7 @@ gem "rails", "~> 7.1.2"
 
 gem 'bootstrap', '~> 5.3.2'
 gem 'sassc-rails'
-
+gem 'simple_form'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

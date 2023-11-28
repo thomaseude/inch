@@ -1,0 +1,12 @@
+<div class="container text-center mt-5">
+
+  <%= simple_form_for @building do |f| %>
+    <%= f.input :reference, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :address, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :zip_code, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :city, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :country,  :as => :string, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :manager_name, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.submit %>
+  <% end %>
+</div>

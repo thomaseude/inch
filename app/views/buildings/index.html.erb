@@ -1,0 +1,26 @@
+<div class="container">
+  <h1 class="text-center mt-5">Menu</h1>
+  <div class="">
+    <div class="text-center">
+      <ul class="">
+        <% @buildings.each do |building| %>
+          <li class="">
+            <%= building.reference.to_s %>.
+            <%= building.address.to_s %>,
+            <%= building.zip_code.to_s %>
+            <%= building.city.to_s %>
+            <%= building.country.to_s %>
+            (<%= building. manager_name.to_s %>)
+            <%= link_to "Edit", edit_building_path(building.id) %>
+          </li>
+        <% end %>
+      </ul>
+      <div>
+        <%= simple_form_for :import, url: import_buildings_path do |f| %>
+          <%= f.input :file, as: :file, input_html: { accept: 'text/csv' } %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

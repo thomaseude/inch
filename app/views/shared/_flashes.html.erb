@@ -1,0 +1,15 @@
+
+<% if notice %>
+  <div class="alert alert-info alert-dismissible fade show m-1 position-absolute" role="alert" style="right: 0; top: 0; z-index: 5000;">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="alert alert-warning alert-dismissible fade show m-1 position-absolute" role="alert" style="right: 0; top: 0; z-index: 5000;">
+    <%= alert %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
+  </div>
+<% end %>

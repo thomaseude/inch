@@ -42,6 +42,20 @@ RSpec.describe Building, type: :model do
     end
   end
 
+  let(:csv_person) do
+    Tempfile.new('csv').tap do |file|
+      file.write(CSV.generate do |csv|
+        csv << ["reference","firstname","lastname","home_phone_number","mobile_phone_number","email","address"]
+        csv << ["1","Pierre","Dupont","0123456789","0623456789","h.dupont@gmail.com","10 Rue La bruyère"]
+        csv << ["2","Jean","Durand","0102030405","0663456789","jdurand@gmail.com","40 Rue René Clair"]
+        csv << ["2","Jean","Durand","0102030405","0602030405","jdurand@gmail.com","40 Rue René Clair"]
+        csv << ["2","Jean","Durand","0102030405","0602030405","jean-durand@gmail.com","40 Rue René Clair"]
+        csv << ["2","Jean","Durand","0102030405","0602030405","jean-durand@gmail.com","42 Rue René Clair"]
+      end)
+      file.rewind
+    end
+  end
+
 
 
   describe 'Import CSV' do
@@ -52,7 +66,7 @@ RSpec.describe Building, type: :model do
       expect(building.errors[:reference]).to include("can't be blank")
     end
 
-    context "Create Building instance if different address (street + zip + city + country)" do
+    context "Create Building instance if new reference" do
       it "CREATE Building" do
         # import init => create
         Building.import(csv_file)
@@ -71,7 +85,7 @@ RSpec.describe Building, type: :model do
       end
     end
 
-    context "Update Building instance if address (street + zip + city + country) is the same" do
+    context "Update Building instance if reference exist" do
       it "UPDATE Building" do
         Building.import(csv_file)
         Building.import(csv_create)
@@ -85,6 +99,22 @@ RSpec.describe Building, type: :model do
         expect(Building.first.city).to eq("Paris")
         expect(Building.first.country).to eq("France")
         expect(Building.first.manager_name).to eq("Thomas EUDE")
+      end
+    end
+
+    context "If upload person file, it must not update or create new instance" do
+      it "Only Import Building" do
+        Building.import(csv_file)
+        Building.import(csv_person)
+
+        expect(Building.count).to eq(2)
+
+        expect(Building.first.reference).to eq("1")
+        expect(Building.first.address).to eq("10 Rue La bruyère")
+        expect(Building.first.zip_code).to eq("75009")
+        expect(Building.first.city).to eq("Paris")
+        expect(Building.first.country).to eq("France")
+        expect(Building.first.manager_name).to eq("Martin Faure")
       end
     end
   end

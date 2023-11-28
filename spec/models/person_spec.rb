@@ -42,6 +42,17 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  let(:csv_building) do
+    Tempfile.new('csv').tap do |file|
+      file.write(CSV.generate do |csv|
+        csv << ["reference","address","zip_code","city","country","manager_name"]
+        csv << ["2","12 rue de la boétie","75008","Paris","France","Martin Faure"]
+        csv << ["1","10 Rue La bruyère","75009","Paris","France","Thomas EUDE"]
+      end)
+      file.rewind
+    end
+  end
+
   describe 'Import CSV' do
 
     it "is invalid without a reference" do
@@ -50,7 +61,7 @@ RSpec.describe Person, type: :model do
       expect(person.errors[:reference]).to include("can't be blank")
     end
 
-    context "Create Person instance if different address (street + zip + city + country)" do
+    context "Create Person instance if reference is not founded" do
       it "CREATE Person" do
         # import init => create
         Person.import(csv_file)
@@ -70,7 +81,7 @@ RSpec.describe Person, type: :model do
       end
     end
 
-    context "Update Person instance if address (street + zip + city + country) is the same" do
+    context "Update Person instance if reference is founded" do
       it "UPDATE Person" do
         Person.import(csv_file)
         Person.import(csv_create)
@@ -80,6 +91,23 @@ RSpec.describe Person, type: :model do
 
         expect(Person.first.reference).to eq("1")
         expect(Person.first.firstname).to eq("Pierre")
+        expect(Person.first.lastname).to eq("Dupont")
+        expect(Person.first.home_phone_number).to eq("0123456789")
+        expect(Person.first.mobile_phone_number).to eq("0623456789")
+        expect(Person.first.email).to eq("h.dupont@gmail.com")
+        expect(Person.first.address).to eq("10 Rue La bruyère")
+      end
+    end
+
+    context "If upload building file, it must not update or create new instance" do
+      it "Only Import Building" do
+        Person.import(csv_file)
+        Person.import(csv_building)
+
+        expect(Person.count).to eq(2)
+
+        expect(Person.first.reference).to eq("1")
+        expect(Person.first.firstname).to eq("Henri")
         expect(Person.first.lastname).to eq("Dupont")
         expect(Person.first.home_phone_number).to eq("0123456789")
         expect(Person.first.mobile_phone_number).to eq("0623456789")

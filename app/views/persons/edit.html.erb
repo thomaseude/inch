@@ -1,0 +1,13 @@
+<div class="container text-center mt-5">
+
+  <%= simple_form_for @person do |f| %>
+    <%= f.input :reference, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :firstname, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :lastname, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :email, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :home_phone_number, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :mobile_phone_number, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.input :address, label_html: {class:"col-2"}, input_html: {class:"mb-3"} %>
+    <%= f.submit %>
+  <% end %>
+</div>

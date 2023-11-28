@@ -17,4 +17,7 @@ Rails.application.routes.draw do
       post :import
     end
   end
+
+  require "sidekiq/web"
+  mount Sidekiq::Web => '/sidekiq'
 end

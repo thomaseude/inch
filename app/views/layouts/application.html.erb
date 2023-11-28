@@ -6,9 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+    <meta name="turbolinks-cache-control" content="no-cache">
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <%= render 'shared/flashes' %>
+    <div class="container">
+      <%= link_to "Back", root_path %>
+    </div>
     <%= yield %>
   </body>
 </html>

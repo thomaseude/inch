@@ -1,0 +1,43 @@
+<div class="container">
+  <h1 class="text-center mt-5">Menu</h1>
+  <div class="">
+    <div class="text-center">
+        <table class="table">
+          <thead>
+          <tr>
+            <%# permit(:reference, :firstname, :lastname, :email, :home_phone_number, :mobile_phone_number, :address) %>
+            <th scope="col">#</th>
+            <th scope="col">firstname</th>
+            <th scope="col">lastname</th>
+            <th scope="col">email</th>
+            <th scope="col">home_phone_number</th>
+            <th scope="col">mobile_phone_number</th>
+            <th scope="col">address</th>
+            <th scope="col">Edit</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @persons.each do |person| %>
+              <tr>
+                <td><%= person.reference.to_s %></td>
+                <td><%= person.firstname.to_s %></td>
+                <td><%= person.lastname.to_s %></td>
+                <td><%= person.email.to_s %></td>
+                <td><%= person.home_phone_number.to_s %></td>
+                <td><%= person.mobile_phone_number.to_s %></td>
+                <td><%= person.address.to_s %></td>
+                <th scope="row"><%= link_to "Edit", edit_person_path(person.id) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <div class="mt-3">
+        <h3 class="mt-5">Import a csv file</h3>
+        <%= simple_form_for :import, url: import_persons_path do |f| %>
+          <%= f.input :file, as: :file, input_html: { accept: 'text/csv' } %>
+          <%= f.submit "Submit", class:"btn btn-primary mt-3" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

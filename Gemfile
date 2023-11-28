@@ -9,6 +9,9 @@ gem 'bootstrap', '~> 5.3.2'
 gem 'sassc-rails'
 gem 'simple_form'
 
+gem "sidekiq"
+gem "sidekiq-failures", "~> 1.0"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 

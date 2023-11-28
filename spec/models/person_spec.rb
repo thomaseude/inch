@@ -100,7 +100,7 @@ RSpec.describe Person, type: :model do
     end
 
     context "If upload building file, it must not update or create new instance" do
-      it "Only Import Building" do
+      it "Only Import Person" do
         Person.import(csv_file)
         Person.import(csv_building)
 

@@ -3,6 +3,8 @@ class ImportCsvJob < ApplicationJob
 
   def perform(row, table)
 
+    row.create()
+
     case table
     when "buildings"
       reference = row[:reference]

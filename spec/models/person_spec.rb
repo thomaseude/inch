@@ -37,7 +37,7 @@ RSpec.describe Person, type: :model do
         csv << ["2","Jean","Durand","0102030405","0602030405","jdurand@gmail.com","40 Rue René Clair"]
         csv << ["2","Jean","Durand","0102030405","0602030405","jean-durand@gmail.com","40 Rue René Clair"]
         csv << ["2","Jean","Durand","0102030405","0602030405","jdurand@gmail.com","42 Rue René Clair"]
-        csv << ["1","Pierre","Dupont","0123456789","0623456789","p.dupont@gmail.com","10 Rue La bruyère"]
+        csv << ["1","Pierre","Dupont","01000000","06000000","p.dupont@gmail.com","11 Rue La bruyère"]
         csv << ["1","Pierre","Dupont","0123456789","0623456789","h.dupont@gmail.com","10 Rue La bruyère"]
       end)
       file.rewind
@@ -94,10 +94,10 @@ RSpec.describe Person, type: :model do
         expect(Person.first.reference).to eq("1")
         expect(Person.first.firstname).to eq("Pierre")
         expect(Person.first.lastname).to eq("Dupont")
-        expect(Person.first.home_phone_number).to eq("0123456789")
-        expect(Person.first.mobile_phone_number).to eq("0623456789")
+        expect(Person.first.home_phone_number).to eq("01000000")
+        expect(Person.first.mobile_phone_number).to eq("06000000")
         expect(Person.first.email).to eq("p.dupont@gmail.com")
-        expect(Person.first.address).to eq("10 Rue La bruyère")
+        expect(Person.first.address).to eq("11 Rue La bruyère")
       end
     end
 

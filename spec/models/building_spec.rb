@@ -37,6 +37,7 @@ RSpec.describe Building, type: :model do
         csv << ["reference","address","zip_code","city","country","manager_name"]
         csv << ["2","12 rue de la boétie","75008","Paris","France","Martin Faure"]
         csv << ["1","10 Rue La bruyère","75009","Paris","France","Thomas EUDE"]
+        csv << ["1","10 Rue La bruyère","75009","Paris","France","Martin Faure"]
       end)
       file.rewind
     end

@@ -1,5 +1,6 @@
 class Building < ApplicationRecord
   validates :reference, presence: true
+  has_many :histories
 
   def self.import(csv)
     require "csv"

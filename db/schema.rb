@@ -28,8 +28,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_29_152142) do
     t.string "mobile_phone_number"
     t.string "address"
     t.string "manager_name"
-    t.integer "person_id", null: false
-    t.integer "building_id", null: false
+    t.integer "person_id"
+    t.integer "building_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["building_id"], name: "index_histories_on_building_id"

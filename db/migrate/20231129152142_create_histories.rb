@@ -6,8 +6,8 @@ class CreateHistories < ActiveRecord::Migration[7.1]
       t.string :mobile_phone_number
       t.string :address
       t.string :manager_name
-      t.references :person, null: false, foreign_key: true
-      t.references :building, null: false, foreign_key: true
+      t.references :person, null: true, foreign_key: true
+      t.references :building, null: true, foreign_key: true
 
       t.timestamps
     end

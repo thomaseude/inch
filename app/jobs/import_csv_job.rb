@@ -3,69 +3,49 @@ class ImportCsvJob < ApplicationJob
 
   def perform(row, table)
 
-    row.create()
-
     case table
     when "buildings"
-      reference = row[:reference]
-      address = row[:address]
-      zip_code = row[:zip_code]
-      city = row[:city]
-      country = row[:country]
-      manager_name = row[:manager_name]
+      attributes = {
+        reference: row[:reference],
+        address: row[:address],
+        zip_code: row[:zip_code],
+        city: row[:city],
+        country: row[:country],
+        manager_name: row[:manager_name],
+        is_create_history: true
+      }
 
       # UPDATE or CREATE
-      building = Building.find_by(reference: reference)
+      building = Building.find_by(reference: attributes[:reference])
       if building.nil?
-        Building.create(
-          reference: reference,
-          address: address,
-          zip_code: zip_code,
-          city: city,
-          country: country,
-          manager_name: manager_name
-        )
+        Building.create!(attributes)
       else
-        building.update(
-          reference: reference,
-          address: address,
-          zip_code: zip_code,
-          city: city,
-          country: country,
-          manager_name: manager_name
-        )
+        attributes.delete(:manager_name) if building.histories.find_by(manager_name: attributes[:manager_name]).present?
+        building.update(attributes)
       end
     when "persons"
-      reference = row[:reference]
-      firstname = row[:firstname]
-      lastname = row[:lastname]
-      home_phone_number = row[:home_phone_number]
-      mobile_phone_number = row[:mobile_phone_number]
-      email = row[:email]
-      address = row[:address]
+      attributes = {
+        reference: row[:reference],
+        firstname: row[:firstname],
+        lastname: row[:lastname],
+        home_phone_number: row[:home_phone_number],
+        mobile_phone_number: row[:mobile_phone_number],
+        email: row[:email],
+        address: row[:address],
+        is_create_history: true
+      }
 
       # UPDATE or CREATE
-      person = Person.find_by(reference: reference)
+      person = Person.find_by(reference: attributes[:reference])
       if person.nil?
-        Person.create(
-          reference: reference,
-          firstname: firstname,
-          lastname: lastname,
-          home_phone_number: home_phone_number,
-          mobile_phone_number: mobile_phone_number,
-          email: email,
-          address: address,
-        )
+        Person.create(attributes)
       else
-        person.update(
-          reference: reference,
-          firstname: firstname,
-          lastname: lastname,
-          home_phone_number: home_phone_number,
-          mobile_phone_number: mobile_phone_number,
-          email: email,
-          address: address,
-        )
+        attributes.delete(:email) if person.histories.find_by(email: attributes[:email]).present?
+        attributes.delete(:home_phone_number) if person.histories.find_by(home_phone_number: attributes[:home_phone_number]).present?
+        attributes.delete(:mobile_phone_number) if person.histories.find_by(mobile_phone_number: attributes[:mobile_phone_number]).present?
+        attributes.delete(:address) if person.histories.find_by(address: attributes[:address]).present?
+
+        person.update(attributes)
       end
     end
     # Do something later

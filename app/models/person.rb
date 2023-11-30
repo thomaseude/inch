@@ -1,7 +1,7 @@
 class Person < ApplicationRecord
   attr_accessor :is_create_history
 
-  has_many :histories
+  has_many :histories, dependent: :destroy
 
   validates :reference, presence: true
 
